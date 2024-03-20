@@ -3,52 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/20 11:47:50 by tiago            ###   ########.fr       */
+/*   Updated: 2024/03/20 19:07:14 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-static char	*ft_strcpy(char *dest, const char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-char	*ft_strdup(const char *str)
-{
-	char	*temp;
-
-	temp = malloc(ft_strlen(str) + 1);
-	if (temp != NULL)
-	{
-		ft_strcpy(temp, str);
-		return (temp);
-	}
-	else
-		return (NULL);
-}
 
 char	**argv_copy(char **argv)
 {
@@ -82,53 +44,37 @@ void	t_events_init(t_events *philo, int i, char **argv)
 	philo->prev = NULL;
 }
 
-int	ft_atoi(const char *nstr)
+void	*routine(void *args)
 {
-	size_t	i;
-	int		sign;
-	int		nb;
+	t_thread_args *arg;
 
-	nb = 0;
-	sign = 1;
-	i = 0;
-	while ((nstr[i] >= 9 && nstr[i] <= 13) || nstr[i] == 32)
-		i++;
-	if (nstr[i] == '-' || nstr[i] == '+')
+	arg = (t_thread_args *)args;
+	if ((t_thread_args *)arg->table_node->fork == 0 && arg->table_node->prev->fork == 0 && args->table_node->sleeping == 1 && args->table_node->thinking == 1)
 	{
-		if (nstr[i] == '-')
-			sign = sign * -1;
-		i++;
+		arg->table_node->fork = 1;
+		arg->table_node->prev->fork = 1;
+		arg->table_node->eating = 0;
+		printf("%d has taken a fork\n", arg->table_node->philosopher);
+		printf("%d has taken a fork\n", arg->table_node->philosopher);
+		printf("%d is eating\n", arg->table_node->philosopher);
 	}
-	while (nstr[i] >= '0' && nstr[i] <= '9')
-		nb = nb * 10 + nstr[i++] - '0';
-	return (nb * sign);
-}
-
-void	*routine(t_events *table_node, char *argv)
-{
-	if (table_node->fork == 0 && table_node->prev->fork == 0 && table_node->sleeping == 1 && table_node->thinking == 1)
-	{
-		table_node->fork = 1;
-		table_node->prev->fork = 1;
-		table_node->eating = 0;
-		printf("%d has taken a fork\n", table_node->philosopher);
-		printf("%d has taken a fork\n", table_node->philosopher);
-		printf("%d is eating\n", table_node->philosopher);
-	}
-	else if ()
+	// else if ()
 }
 
 int	start_hunger_games(char **argv, t_events *table, int num_of_philos)
 {
 	pthread_t		philo[num_of_philos];
 	pthread_mutex_t	fork_mutex;
+	t_thread_args	*args;
 	int				i;
 
+	args->argv = table->argv;
+	args->table_node = table;
 	pthread_mutex_init(&fork_mutex, NULL);
 	i = 0;
 	while (i < num_of_philos)
 	{
-		if (pthread_create(&philo[i], NULL, &routine, NULL) != 0)
+		if (pthread_create(&philo[i], NULL, &routine, &args) != 0)
 			return (1);
 		i++;
 	}
@@ -149,14 +95,14 @@ int	main(int argc, char **argv)
 	if (num_of_philos < 1)
 		return (0);
 	table = (t_events *)malloc(sizeof(t_events));
-	t_events_init(table, num_of_philos);
+	t_events_init(table, num_of_philos, argv);
 	table->next = table;
 	table->prev = table;
 	node = table;
 	while (++i <= num_of_philos)
 	{	
 		node->next = (t_events *)malloc(sizeof(t_events));
-		t_events_init(node, num_of_philos);
+		t_events_init(node, num_of_philos, argv);
 		node->next->prev = node;
 		node->next->next = table;
 		table->prev = node->next;
