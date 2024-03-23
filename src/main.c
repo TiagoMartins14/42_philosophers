@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/20 19:07:14 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 20:14:04 by tiago            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-char	**argv_copy(char **argv)
+/* char	**argv_copy(char **argv)
 {
 	int		i;
 	char	**argv_copy;
@@ -29,56 +29,79 @@ char	**argv_copy(char **argv)
 	}
 	argv_copy[i] = NULL;
 	return (argv_copy);
-}
+} */
 
 void	t_events_init(t_events *philo, int i, char **argv)
 {
+	philo->argv_1 = ft_atoi(argv[1]);
+	philo->argv_2 = ft_atoi(argv[2]);
+	philo->argv_3 = ft_atoi(argv[3]);
+	philo->argv_4 = ft_atoi(argv[4]);
+	if (argv[5])
+		philo->argv_5 = ft_atoi(argv[5]);
+	else
+		philo->argv_5 = -1;
 	philo->philosopher = i;
 	philo->fork = 0;
 	philo->priority = i;
 	philo->eating = 1;
 	philo->sleeping = 1;
 	philo->thinking = 1;
-	philo->argv = argv_copy(argv);
+	philo->dead = 1;
 	philo->next = NULL;
 	philo->prev = NULL;
 }
 
-void	*routine(void *args)
+void	*routine(void * args)
 {
-	t_thread_args *arg;
-
-	arg = (t_thread_args *)args;
-	if ((t_thread_args *)arg->table_node->fork == 0 && arg->table_node->prev->fork == 0 && args->table_node->sleeping == 1 && args->table_node->thinking == 1)
+	t_events *table = args;
+	while (1)
 	{
-		arg->table_node->fork = 1;
-		arg->table_node->prev->fork = 1;
-		arg->table_node->eating = 0;
-		printf("%d has taken a fork\n", arg->table_node->philosopher);
-		printf("%d has taken a fork\n", arg->table_node->philosopher);
-		printf("%d is eating\n", arg->table_node->philosopher);
+		if (table->fork == 0 && table->prev->fork == 0 && table->sleeping == 1 && table->thinking == 1)
+		{
+			table->fork = 1;
+			table->prev->fork = 1;
+			table->eating = 0;
+			printf("%d has taken a fork\n", table->philosopher);
+			printf("%d has taken a fork\n", table->philosopher);
+			printf("%d is eating\n", table->philosopher);
+			sleep(table->argv_3);
+			printf("%d is sleeping\n", table->philosopher);
+			sleep(table->argv_4);
+			table->fork = 0;
+			table->prev->fork = 0;
+		}
 	}
-	// else if ()
+	return (args);
 }
 
-int	start_hunger_games(char **argv, t_events *table, int num_of_philos)
+int	start_hunger_games(t_events *table, int num_of_philos)
 {
 	pthread_t		philo[num_of_philos];
 	pthread_mutex_t	fork_mutex;
-	t_thread_args	*args;
 	int				i;
 
-	args->argv = table->argv;
-	args->table_node = table;
-	pthread_mutex_init(&fork_mutex, NULL);
+	// pthread_mutex_init(&fork_mutex, NULL);
 	i = 0;
 	while (i < num_of_philos)
 	{
-		if (pthread_create(&philo[i], NULL, &routine, &args) != 0)
+		pthread_mutex_init(&fork_mutex, NULL);
+		if (pthread_create(&philo[i], NULL, &routine, table) != 0)
 			return (1);
+		pthread_mutex_destroy(&fork_mutex);
+		table = table->next;
 		i++;
 	}
-	pthread_mutex_destroy(&fork_mutex);
+	while (table)
+	{
+		if (table->dead == 0)
+			return (0);
+		usleep(5000);
+		table = table->next;
+	}
+
+	// pthread_mutex_destroy(&fork_mutex);
+	return (0);
 }
 
 
@@ -90,21 +113,45 @@ int	main(int argc, char **argv)
 	t_events		*table;
 	t_events		*node;
 
+	(void)argc;
 	num_of_philos = ft_atoi(argv[1]);
 	i = 1;
 	if (num_of_philos < 1)
 		return (0);
 	table = (t_events *)malloc(sizeof(t_events));
-	t_events_init(table, num_of_philos, argv);
+	t_events_init(table, i, argv);
 	table->next = table;
 	table->prev = table;
 	node = table;
 	while (++i <= num_of_philos)
-	{	
+	{
 		node->next = (t_events *)malloc(sizeof(t_events));
-		t_events_init(node, num_of_philos, argv);
+		t_events_init(node->next, i, argv);
 		node->next->prev = node;
 		node->next->next = table;
 		table->prev = node->next;
+		node = node->next;
 	}
+	start_hunger_games(table, num_of_philos);
+	// while (node != table)
+	// {
+	// 	int j = 0;
+	// 	printf("eating: %d\n", node->eating);
+	// 	printf("fork: %d\n", node->fork);
+	// 	printf("philosopher: %d\n", node->philosopher);
+	// 	printf("priority: %d\n", node->priority);
+	// 	printf("sleeping: %d\n", node->sleeping);
+	// 	printf("thinking %d\n\n", node->thinking);
+	// 	printf("argv:");
+	// 	while (node->argv[j])
+	// 		printf(" %s", node->argv[j++]);
+	// 	printf("\n");
+	// 	node = node->prev;
+	// }
+	// printf("eating: %d\n", node->eating);
+	// printf("fork: %d\n", node->fork);
+	// printf("philosopher: %d\n", node->philosopher);
+	// printf("priority: %d\n", node->priority);
+	// printf("sleeping: %d\n", node->sleeping);
+	// printf("thinking %d\n", node->thinking);
 }

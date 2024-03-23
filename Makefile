@@ -6,7 +6,7 @@
 #    By: tiago <tiago@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/15 07:44:06 by tiaferna          #+#    #+#              #
-#    Updated: 2024/03/20 10:23:59 by tiago            ###   ########.fr        #
+#    Updated: 2024/03/23 20:07:19 by tiago            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -g 
 RM				= rm -rf
 
-SRCS			= 	main.c
+SRCS			= 	main.c \
+					utils.c
 
 # Substitute .c with .o 
 OBJS			= $(SRCS:%.c=$(OBJS_DIR)/%.o)
