@@ -6,30 +6,11 @@
 /*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/23 20:14:04 by tiago            ###   ########.fr       */
+/*   Updated: 2024/03/23 23:19:26 by tiago            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
-
-/* char	**argv_copy(char **argv)
-{
-	int		i;
-	char	**argv_copy;
-
-	i = 0;
-	while (argv[i])
-		i++;
-	argv_copy = (char **)malloc(sizeof(char *) * i + 1);
-	i = 0;
-	while (argv[i])
-	{
-		argv_copy[i] = ft_strdup(argv[i]);
-		i++;
-	}
-	argv_copy[i] = NULL;
-	return (argv_copy);
-} */
 
 void	t_events_init(t_events *philo, int i, char **argv)
 {
@@ -44,10 +25,10 @@ void	t_events_init(t_events *philo, int i, char **argv)
 	philo->philosopher = i;
 	philo->fork = 0;
 	philo->priority = i;
-	philo->eating = 1;
-	philo->sleeping = 1;
-	philo->thinking = 1;
-	philo->dead = 1;
+	philo->eating = false;
+	philo->sleeping = false;
+	philo->thinking = false;
+	philo->dead = false;
 	philo->next = NULL;
 	philo->prev = NULL;
 }
@@ -55,21 +36,31 @@ void	t_events_init(t_events *philo, int i, char **argv)
 void	*routine(void * args)
 {
 	t_events *table = args;
+	
 	while (1)
 	{
-		if (table->fork == 0 && table->prev->fork == 0 && table->sleeping == 1 && table->thinking == 1)
+		if (table->fork == 0 && table->prev->fork == 0 && table->sleeping == false)
 		{
 			table->fork = 1;
 			table->prev->fork = 1;
-			table->eating = 0;
-			printf("%d has taken a fork\n", table->philosopher);
-			printf("%d has taken a fork\n", table->philosopher);
-			printf("%d is eating\n", table->philosopher);
-			sleep(table->argv_3);
-			printf("%d is sleeping\n", table->philosopher);
-			sleep(table->argv_4);
+			gettimeofday(&table->current_time, NULL);
+			printf("%ld %d has taken a fork\n", table->current_time.tv_usec, table->philosopher);
+			gettimeofday(&table->current_time, NULL);
+			printf("%ld %d has taken a fork\n", table->current_time.tv_usec, table->philosopher);
+			table->eating = true;
+			gettimeofday(&table->current_time, NULL);
+			printf("%ld %d is eating\n", table->current_time.tv_usec, table->philosopher);
+			usleep(table->argv_3);
 			table->fork = 0;
 			table->prev->fork = 0;
+			table->eating = false;
+			table->sleeping = true;
+			printf("%ld %d is sleeping\n", table->current_time.tv_usec, table->philosopher);
+			usleep(table->argv_4);
+			table->sleeping = false;
+			table->thinking = true;
+			printf("%ld %d is thinking\n", table->current_time.tv_usec, table->philosopher);
+			table->thinking = false;
 		}
 	}
 	return (args);
@@ -81,7 +72,6 @@ int	start_hunger_games(t_events *table, int num_of_philos)
 	pthread_mutex_t	fork_mutex;
 	int				i;
 
-	// pthread_mutex_init(&fork_mutex, NULL);
 	i = 0;
 	while (i < num_of_philos)
 	{
@@ -94,13 +84,11 @@ int	start_hunger_games(t_events *table, int num_of_philos)
 	}
 	while (table)
 	{
-		if (table->dead == 0)
+		if (table->dead == true)
 			return (0);
-		usleep(5000);
+		// usleep(50);
 		table = table->next;
 	}
-
-	// pthread_mutex_destroy(&fork_mutex);
 	return (0);
 }
 
@@ -120,6 +108,7 @@ int	main(int argc, char **argv)
 		return (0);
 	table = (t_events *)malloc(sizeof(t_events));
 	t_events_init(table, i, argv);
+	gettimeofday(&table->start_time, NULL);
 	table->next = table;
 	table->prev = table;
 	node = table;

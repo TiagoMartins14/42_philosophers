@@ -6,7 +6,7 @@
 /*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/23 20:06:48 by tiago            ###   ########.fr       */
+/*   Updated: 2024/03/23 23:09:43 by tiago            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_events
 	bool			sleeping;
 	bool			thinking;
 	bool			dead;
+	struct timeval	start_time;
+	struct timeval	current_time;
 	struct s_events	*next;
 	struct s_events	*prev;
 }	t_events;
