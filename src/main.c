@@ -6,7 +6,7 @@
 /*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/23 23:19:26 by tiago            ###   ########.fr       */
+/*   Updated: 2024/03/24 00:22:07 by tiago            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	t_events_init(t_events *philo, int i, char **argv)
 	philo->philosopher = i;
 	philo->fork = 0;
 	philo->priority = i;
+	philo->start_time = 0;
+	philo->current_time = 0;
+	philo->last_meal = 0;
 	philo->eating = false;
 	philo->sleeping = false;
 	philo->thinking = false;
@@ -33,9 +36,22 @@ void	t_events_init(t_events *philo, int i, char **argv)
 	philo->prev = NULL;
 }
 
+long	get_time(void)
+{
+	struct timeval		time;
+
+	if (gettimeofday(&time, NULL) == -1)
+	{
+		write(2, "gettimeofday error\n", 20);
+		return (-1);
+	}
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+
 void	*routine(void * args)
 {
-	t_events *table = args;
+	t_events	*table = args;
 	
 	while (1)
 	{
@@ -43,23 +59,20 @@ void	*routine(void * args)
 		{
 			table->fork = 1;
 			table->prev->fork = 1;
-			gettimeofday(&table->current_time, NULL);
-			printf("%ld %d has taken a fork\n", table->current_time.tv_usec, table->philosopher);
-			gettimeofday(&table->current_time, NULL);
-			printf("%ld %d has taken a fork\n", table->current_time.tv_usec, table->philosopher);
+			printf("%ld %d has taken a fork\n", get_time() - table->start_time, table->philosopher);
+			printf("%ld %d has taken a fork\n", get_time() - table->start_time, table->philosopher);
 			table->eating = true;
-			gettimeofday(&table->current_time, NULL);
-			printf("%ld %d is eating\n", table->current_time.tv_usec, table->philosopher);
-			usleep(table->argv_3);
+			printf("%ld %d is eating\n", get_time() - table->start_time, table->philosopher);
+			usleep(table->argv_3 * 10000);
 			table->fork = 0;
 			table->prev->fork = 0;
 			table->eating = false;
 			table->sleeping = true;
-			printf("%ld %d is sleeping\n", table->current_time.tv_usec, table->philosopher);
-			usleep(table->argv_4);
+			printf("%ld %d is sleeping\n", get_time() - table->start_time, table->philosopher);
+			usleep(table->argv_4 * 10000);
 			table->sleeping = false;
 			table->thinking = true;
-			printf("%ld %d is thinking\n", table->current_time.tv_usec, table->philosopher);
+			printf("%ld %d is thinking\n", get_time() - table->start_time, table->philosopher);
 			table->thinking = false;
 		}
 	}
@@ -73,6 +86,7 @@ int	start_hunger_games(t_events *table, int num_of_philos)
 	int				i;
 
 	i = 0;
+	table->start_time = get_time();
 	while (i < num_of_philos)
 	{
 		pthread_mutex_init(&fork_mutex, NULL);
@@ -108,7 +122,6 @@ int	main(int argc, char **argv)
 		return (0);
 	table = (t_events *)malloc(sizeof(t_events));
 	t_events_init(table, i, argv);
-	gettimeofday(&table->start_time, NULL);
 	table->next = table;
 	table->prev = table;
 	node = table;

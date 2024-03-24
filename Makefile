@@ -6,11 +6,11 @@
 #    By: tiago <tiago@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/15 07:44:06 by tiaferna          #+#    #+#              #
-#    Updated: 2024/03/23 20:07:19 by tiago            ###   ########.fr        #
+#    Updated: 2024/03/24 00:24:11 by tiago            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+NAME = philo
 
 RESET	= \033[0m
 BOLD	= \033[1m
