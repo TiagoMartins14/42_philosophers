@@ -6,7 +6,7 @@
 /*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/24 00:22:07 by tiago            ###   ########.fr       */
+/*   Updated: 2024/03/24 12:38:11 by tiago            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void	*routine(void * args)
 			printf("%ld %d has taken a fork\n", get_time() - table->start_time, table->philosopher);
 			printf("%ld %d has taken a fork\n", get_time() - table->start_time, table->philosopher);
 			table->eating = true;
-			printf("%ld %d is eating\n", get_time() - table->start_time, table->philosopher);
-			usleep(table->argv_3 * 10000);
+			printf(GREEN"%ld %d is eating\n"RESET, get_time() - table->start_time, table->philosopher);
+			usleep(table->argv_3 * 1000);
 			table->fork = 0;
 			table->prev->fork = 0;
 			table->eating = false;
 			table->sleeping = true;
 			printf("%ld %d is sleeping\n", get_time() - table->start_time, table->philosopher);
-			usleep(table->argv_4 * 10000);
+			usleep(table->argv_4 * 1000);
 			table->sleeping = false;
 			table->thinking = true;
 			printf("%ld %d is thinking\n", get_time() - table->start_time, table->philosopher);
@@ -83,17 +83,19 @@ int	start_hunger_games(t_events *table, int num_of_philos)
 {
 	pthread_t		philo[num_of_philos];
 	pthread_mutex_t	fork_mutex;
+	t_events		*chair;
 	int				i;
 
+	chair = table;
 	i = 0;
-	table->start_time = get_time();
 	while (i < num_of_philos)
 	{
+		chair->start_time = get_time();
 		pthread_mutex_init(&fork_mutex, NULL);
-		if (pthread_create(&philo[i], NULL, &routine, table) != 0)
+		if (pthread_create(&philo[i], NULL, &routine, chair) != 0)
 			return (1);
 		pthread_mutex_destroy(&fork_mutex);
-		table = table->next;
+		chair = chair->next;
 		i++;
 	}
 	while (table)

@@ -6,7 +6,7 @@
 /*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/23 23:53:58 by tiago            ###   ########.fr       */
+/*   Updated: 2024/03/24 12:35:58 by tiago            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@
 # include <sys/time.h>
 # include <stdlib.h>
 # include <stdio.h>
+
+#define RESET "\033[0m"
+#define BOLD "\033[1m"
+#define FAINT "\033[2m"
+#define ITALIC "\033[3m"
+#define ULINE "\033[4m"
+#define SBLINK "\033[5m"
+#define FBLINK "\033[6m"
+#define REVCOL "\033[7m"
+#define HIDDEN "\033[8m"
+#define CROSS "\033[9m"
+#define BLACK "\033[1;30m"
+#define RED "\033[1;31m"
+#define GREEN "\033[1;32m"
+#define YELLOW "\033[1;33m"
+#define BLUE "\033[1;34m"
+#define PURPLE "\033[1;35m"
+#define CYAN "\033[1;36m"
+#define WHITE "\033[1;37m"
 
 typedef struct s_events
 {
