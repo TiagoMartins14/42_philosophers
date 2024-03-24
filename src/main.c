@@ -6,7 +6,7 @@
 /*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/24 12:38:11 by tiago            ###   ########.fr       */
+/*   Updated: 2024/03/24 22:54:32 by tiago            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ long	get_time(void)
 void	*routine(void * args)
 {
 	t_events	*table = args;
+	pthread_mutex_t	fork_mutex;
 	
 	while (1)
 	{
+		pthread_mutex_init(&fork_mutex, NULL);
 		if (table->fork == 0 && table->prev->fork == 0 && table->sleeping == false)
 		{
 			table->fork = 1;
@@ -75,6 +77,7 @@ void	*routine(void * args)
 			printf("%ld %d is thinking\n", get_time() - table->start_time, table->philosopher);
 			table->thinking = false;
 		}
+		pthread_mutex_destroy(&fork_mutex);
 	}
 	return (args);
 }
@@ -82,7 +85,6 @@ void	*routine(void * args)
 int	start_hunger_games(t_events *table, int num_of_philos)
 {
 	pthread_t		philo[num_of_philos];
-	pthread_mutex_t	fork_mutex;
 	t_events		*chair;
 	int				i;
 
@@ -91,10 +93,8 @@ int	start_hunger_games(t_events *table, int num_of_philos)
 	while (i < num_of_philos)
 	{
 		chair->start_time = get_time();
-		pthread_mutex_init(&fork_mutex, NULL);
 		if (pthread_create(&philo[i], NULL, &routine, chair) != 0)
 			return (1);
-		pthread_mutex_destroy(&fork_mutex);
 		chair = chair->next;
 		i++;
 	}
@@ -102,7 +102,6 @@ int	start_hunger_games(t_events *table, int num_of_philos)
 	{
 		if (table->dead == true)
 			return (0);
-		// usleep(50);
 		table = table->next;
 	}
 	return (0);
