@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/03/26 21:53:01 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/03/26 22:09:34 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,3 +121,6 @@ int	main(int argc, char **argv)
 	}
 	start_the_hunger_games(table, ft_atoi(argv[1]), set_start);
 }
+
+// A FAZER:
+// Parar mal um philo chegue ao t_t_die sem ter comido nada.
