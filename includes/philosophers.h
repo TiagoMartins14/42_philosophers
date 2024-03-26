@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tiago <tiago@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 10:24:33 by tiago             #+#    #+#             */
-/*   Updated: 2024/03/24 12:35:58 by tiago            ###   ########.fr       */
+/*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
+/*   Updated: 2024/03/26 14:19:57 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,34 @@
 #define CYAN "\033[1;36m"
 #define WHITE "\033[1;37m"
 
-typedef struct s_events
+typedef struct s_thg
 {
 	int				argv_1;
 	int				argv_2;
 	int				argv_3;
 	int				argv_4;
 	int				argv_5;
+	int				meals;
 	int				philosopher;
 	int				fork;
 	int				priority;
-	long			start_time;
 	long			current_time;
 	long			last_meal;
+	long			*start_time;
+	bool			all_set;
 	bool			eating;
 	bool			sleeping;
 	bool			thinking;
 	bool			dead;
-	struct s_events	*next;
-	struct s_events	*prev;
-}	t_events;
+	pthread_mutex_t	fork_mutex;
+	pthread_mutex_t	meal_mutex;
+	struct s_thg	*next;
+	struct s_thg	*prev;
+}	t_thg;
+
+
+// structs_init.c
+void	t_thg_init(t_thg *game, int i, long *set_start, char **argv);
 
 // utils.c
 size_t	ft_strlen(const char *s);
