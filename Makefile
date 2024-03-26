@@ -6,7 +6,7 @@
 #    By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#              #
-#    Updated: 2024/03/26 15:04:34 by tiaferna         ###   ########.fr        #
+#    Updated: 2024/03/26 21:26:22 by tiaferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,9 +41,11 @@ CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -g 
 RM				= rm -rf
 
-SRCS			= 	main.c \
-					utils.c \
-					structs_init.c
+SRCS			= 	conditions.c \
+					main.c \
+					structs_init.c \
+					time.c \
+					utils.c
 
 # Substitute .c with .o 
 OBJS			= $(SRCS:%.c=$(OBJS_DIR)/%.o)
@@ -78,4 +80,4 @@ re: fclean
 
 #targets declared as .PHONY will force the command even if there is a subdirectory or file with it's name
 .PHONY: all clean fclean re
-.SILENT: .vscode
+.SILENT:

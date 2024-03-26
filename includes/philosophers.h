@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/03/26 14:19:57 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:30:04 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,37 @@
 
 typedef struct s_thg
 {
-	int				argv_1;
-	int				argv_2;
-	int				argv_3;
-	int				argv_4;
-	int				argv_5;
-	int				meals;
+	int				t_t_die;
+	int				t_t_eat;
+	int				t_t_sleep;
+	int				max_meals;
+	int				meals_counter;
 	int				philosopher;
 	int				fork;
-	int				priority;
 	long			current_time;
 	long			last_meal;
 	long			*start_time;
-	bool			all_set;
 	bool			eating;
 	bool			sleeping;
 	bool			thinking;
-	bool			dead;
+	bool			*dead;
 	pthread_mutex_t	fork_mutex;
 	pthread_mutex_t	meal_mutex;
 	struct s_thg	*next;
 	struct s_thg	*prev;
 }	t_thg;
 
+// conditions.c
+bool	has_two_forks(t_thg *table);
 
 // structs_init.c
-void	t_thg_init(t_thg *game, int i, long *set_start, char **argv);
+void	t_thg_common_var_setter(t_thg *game, long *set_start, bool *death);
+void	t_thg_init(t_thg *game, int i, char **argv);
+
+// time.c
+int		ft_usleep(int usec);
+long	get_time(void);
+long	timestamp_calc(long current_time, long start_time);
 
 // utils.c
 size_t	ft_strlen(const char *s);
