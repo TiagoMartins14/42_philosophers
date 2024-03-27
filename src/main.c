@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/03/26 22:09:34 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:34:08 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,27 @@ void	*routine(void *args)
 
 	while (*table->start_time == -1)
 		continue ;
+	if (table->philosopher % 2 == 0)
+		ft_usleep(5);
 	while (1)
 	{
 		timestamp = timestamp_calc(get_time(), *table->start_time);
 		timestamp -= timestamp % table->t_t_eat;
 		if (timestamp - table->last_meal > table->t_t_die && *table->dead == false)
 		{
-			printf(RED"%ld %d died\n"RESET, timestamp, table->philosopher);
+			printf(RED"%ld %d died\n"RESET, timestamp + 1, table->philosopher);
 			*table->dead = true;
 			break ;
 		}
 		if (has_two_forks(table) == true)
 		{
+			pthread_mutex_lock(&table->fork_mutex);
 			printf("%ld %d has taken a fork\n", timestamp, table->philosopher);
 			printf("%ld %d has taken a fork\n", timestamp, table->philosopher);
 			table->last_meal = timestamp;
 			printf(GREEN"%ld %d is eating\n"RESET, timestamp, table->philosopher);
 			ft_usleep(table->t_t_eat * 1000);
-			pthread_mutex_lock(&table->fork_mutex);
+			
 			table->fork = 0;
 			table->prev->fork = 0;
 			pthread_mutex_unlock(&table->fork_mutex);
@@ -45,13 +48,14 @@ void	*routine(void *args)
 		{
 			table->eating = false;
 			table->sleeping = true;
-			printf("%ld %d is sleeping\n", timestamp + table->t_t_eat, table->philosopher);
+			printf(BLUE"%ld %d is sleeping\n"RESET, timestamp + table->t_t_eat, table->philosopher);
 			ft_usleep(table->t_t_sleep * 1000);
 			table->sleeping = false;
 			table->thinking = true;
 			printf("%ld %d is thinking\n", timestamp + table->t_t_sleep + table->t_t_eat, table->philosopher);
 			table->thinking = false;
 		}
+		
 	}
 	return (args);
 }
@@ -62,6 +66,7 @@ int	start_the_hunger_games(t_thg *table, int num_of_philos, long *set_start)
 	t_thg			*chair;
 	int				i;
 
+	(void)set_start;
 	i = 0;
 	chair = table;
 	pthread_mutex_init(&table->fork_mutex, NULL);
@@ -73,8 +78,8 @@ int	start_the_hunger_games(t_thg *table, int num_of_philos, long *set_start)
 		chair = chair->next;
 		i++;
 	}
-	sleep(1);
-	*set_start = get_time();
+	ft_usleep(100);
+	*table->start_time = get_time();
 	while (chair)
 	{
 		if (*chair->dead == true)
@@ -122,5 +127,6 @@ int	main(int argc, char **argv)
 	start_the_hunger_games(table, ft_atoi(argv[1]), set_start);
 }
 
-// A FAZER:
-// Parar mal um philo chegue ao t_t_die sem ter comido nada.
+// PARA FAZER:
+
+// criar forma de um philo morrer no exato momento em que passar o t_t_die e ele nao tiver comido durante esse tempo.
