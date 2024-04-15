@@ -6,7 +6,7 @@
 #    By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#              #
-#    Updated: 2024/03/26 21:26:22 by tiaferna         ###   ########.fr        #
+#    Updated: 2024/04/03 09:07:02 by tiaferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,13 @@ CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -g 
 RM				= rm -rf
 
-SRCS			= 	conditions.c \
+SRCS			= 	actions.c \
+					conditions.c \
+					ft_utils.c \
 					main.c \
+					mem_free.c \
 					structs_init.c \
-					time.c \
-					utils.c
+					time.c
 
 # Substitute .c with .o 
 OBJS			= $(SRCS:%.c=$(OBJS_DIR)/%.o)
