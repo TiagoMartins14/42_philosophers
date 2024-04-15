@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/03 09:48:25 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/15 16:42:36 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_thg
 	int				t_t_eat;
 	int				t_t_sleep;
 	int				max_meals;
-	int				meals_counter;
+	int				*meals_counter;
 	int				philosopher;
 	int				fork;
 	long			current_time;
@@ -56,41 +56,29 @@ typedef struct s_thg
 	bool			sleeping;
 	bool			thinking;
 	bool			*dead;
-	pthread_mutex_t	fork_mutex;
-	pthread_mutex_t	meal_mutex;
-	pthread_mutex_t	dead_mutex;
-	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	*fork_mutex;
+	pthread_mutex_t	*dead_mutex;
+	pthread_mutex_t	*time_mutex;
 	struct s_thg	*next;
 	struct s_thg	*prev;
 }	t_thg;
 
-// actions.c
-void	philo_eat(t_thg *table, long timestamp);
-void	prepare_to_sleep(t_thg *table);
-void	philo_sleep(t_thg *table, long timestamp);
-void	philo_think(t_thg *table, long timestamp);
-
 // conditions.c
 bool	has_two_forks(t_thg *table);
-bool	is_dead(t_thg *table, long timestamp);
-bool	death_checker(t_thg *table);
-bool	grim_reaper_arrived(t_thg *table, long elapsed_usec);
-
-// ft_utils.c
-size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *str);
-int		ft_atoi(const char *nstr);
-
-// mem_free.c
-void	free_the_games(t_thg *table);
+bool	is_philo_dead(t_thg *table);
 
 // structs_init.c
-void	t_thg_common_var_setter(t_thg *game, long *set_start, bool *death);
-void	t_thg_init(t_thg *game, int i, char **argv);
+void	t_thg_init(t_thg *game, t_thg *chair, int i, char **argv);
+void	t_thg_first_init(t_thg *game, int i, char **argv);
 
 // time.c
 int		ft_usleep(int usec, t_thg *table);
 long	get_time(void);
 long	timestamp_calc(long current_time, long start_time);
+
+// utils.c
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *str);
+int		ft_atoi(const char *nstr);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#              #
-#    Updated: 2024/04/03 09:07:02 by tiaferna         ###   ########.fr        #
+#    Updated: 2024/04/15 17:16:06 by tiaferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,16 +38,14 @@ OBJS_DIR		= objs
 INCLUDES		= includes
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g 
+CFLAGS			= -Wall -Wextra -Werror -g #-fsanitize=thread
 RM				= rm -rf
 
-SRCS			= 	actions.c \
-					conditions.c \
-					ft_utils.c \
+SRCS			= 	conditions.c \
 					main.c \
-					mem_free.c \
 					structs_init.c \
-					time.c
+					time.c \
+					utils.c
 
 # Substitute .c with .o 
 OBJS			= $(SRCS:%.c=$(OBJS_DIR)/%.o)
