@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/15 17:16:00 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/24 22:23:11 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_philos(t_thg *game, char *argv1)
 {
 	int i = 0;
 
-	while (i++ <= ft_atoi(argv1))
+	while (i++ < ft_atoi(argv1))
 	{
 		printf("\n*** PHILO %d ***\n", game->philosopher);
 		printf("t_t_die %d\n", game->t_t_die);
@@ -35,15 +35,11 @@ void	print_philos(t_thg *game, char *argv1)
 		printf("eating %d\n", game->eating);
 		printf("sleeping %d\n", game->sleeping);
 		printf("thinking %d\n", game->thinking);
-		printf("next %p\n", &game->next);
-		printf("prev %p\n", &game->prev);
+		printf("next %p\n", game->next);
+		printf("prev %p\n", game->prev);
 		game = game->next;
 	}
 }
-
-
-
-
 
 void	*routine(void *args)
 {
@@ -61,7 +57,7 @@ void	*routine(void *args)
 		ft_usleep(5, table);
 	while (1)
 	{
-		timestamp = timestamp_calc(get_time(), *table->start_time);
+		timestamp = timestamp_calc(get_time_in_ms(), *table->start_time);
 		timestamp -= timestamp % table->t_t_eat;
 		pthread_mutex_lock(table->dead_mutex);
 		if (timestamp - table->last_meal > table->t_t_die && *table->dead == false)
@@ -111,31 +107,37 @@ int	start_the_hunger_games(t_thg *table, int num_of_philos)
 
 	i = 0;
 	chair = table;
-	pthread_mutex_init(table->fork_mutex, NULL);
-	pthread_mutex_init(table->dead_mutex, NULL);
-	pthread_mutex_init(&time_mutex, NULL);
+	// mutex_handle(table->fork_mutex, INIT);
+	// mutex_handle(table->dead_mutex, INIT);
+	// mutex_handle(&time_mutex, INIT);
 	while (i < num_of_philos)
 	{
 		chair->start_time = table->start_time;
-		if (pthread_create(&philo[i], NULL, &routine, chair) != 0)
+		if (thread_handle(&philo[i], &routine, chair, CREATE) != 0)
 			return (1);
 		chair = chair->next;
 		i++;
 	}
 	ft_usleep(100, table);
-	pthread_mutex_lock(&time_mutex);
-	*table->start_time = get_time();
-	pthread_mutex_unlock(&time_mutex);
+	mutex_handle(&time_mutex, LOCK);
+	*table->start_time = get_time_in_ms();
+	mutex_handle(&time_mutex, UNLOCK);
 	i = 0;
 	while (i < num_of_philos)
 	{
-		if (pthread_join(philo[i], NULL) != 0)
+		if (thread_handle(&philo[i], NULL, NULL, JOIN) != 0)
 			return (1);
 		i++;
 	}
-	pthread_mutex_destroy(table->fork_mutex);
-	pthread_mutex_destroy(table->dead_mutex);
-	pthread_mutex_destroy(&time_mutex);
+	// mutex_handle(table->fork_mutex, DESTROY);
+	// mutex_handle(table->dead_mutex, DESTROY);
+	// mutex_handle(&time_mutex, DESTROY);
+	while (i < num_of_philos)
+	{
+		if (thread_handle(&philo[i], NULL, NULL, JOIN) != 0)
+			return (1);
+		i++;
+	}
 	return (0);
 }
 
@@ -151,15 +153,11 @@ int	main(int argc, char **argv)
 	i = 1;
 	if (ft_atoi(argv[1]) < 1)
 		return (0);
-	printf("A\n");
 	table = (t_thg *)malloc(sizeof(t_thg));
-	printf("B\n");
 	t_thg_first_init(table, i, argv);
-	printf("C\n");
 	table->next = table;
 	table->prev = table;
 	chair = table;
-	printf("D\n");
 	while (++i <= ft_atoi(argv[1]))
 	{
 		chair->next = (t_thg *)malloc(sizeof(t_thg));
@@ -169,9 +167,6 @@ int	main(int argc, char **argv)
 		table->prev = chair->next;
 		chair = chair->next;
 	}
-	printf("E\n");
-	print_philos(table, argv[1]);
-	return (0);
 	start_the_hunger_games(table, ft_atoi(argv[1]));
 }
 

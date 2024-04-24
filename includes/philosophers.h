@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/15 16:42:36 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/24 23:01:24 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <errno.h>
 
 #define RESET "\033[0m"
 #define BOLD "\033[1m"
@@ -39,6 +40,29 @@
 #define PURPLE "\033[1;35m"
 #define CYAN "\033[1;36m"
 #define WHITE "\033[1;37m"
+
+typedef pthread_mutex_t	t_mtx;
+
+typedef	enum e_op
+{
+	INIT,
+	CREATE,
+	DESTROY,
+	JOIN,
+	DETACH,
+	LOCK,
+	UNLOCK,
+}	t_op;
+
+typedef enum e_philo_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_RIGHT_FORK,
+	TAKE_LEFT_FORK,
+	DIED,
+}	t_philo_status;
 
 typedef struct s_thg
 {
@@ -67,13 +91,30 @@ typedef struct s_thg
 bool	has_two_forks(t_thg *table);
 bool	is_philo_dead(t_thg *table);
 
+// mutex_utils.c
+int	mutex_handle(t_mtx *mutex, t_op operation);
+
+// setters_and_getters_1.c
+void	set_int(t_mtx *mutex, int *dest, int value);
+int		get_int(t_mtx *mutex, int *value);
+void	set_long(t_mtx *mutex, long *dest, long value);
+long	get_long(t_mtx *mutex, long *value);
+
+// setters_and_getters_2.c
+void	set_bool(t_mtx *mutex, bool *dest, bool value);
+bool	get_bool(t_mtx *mutex, bool *value);
+// bool	is_somone_dead(t_thg *table);
+
 // structs_init.c
 void	t_thg_init(t_thg *game, t_thg *chair, int i, char **argv);
 void	t_thg_first_init(t_thg *game, int i, char **argv);
 
+// threads_utils.c
+int	thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_op operation);
+
 // time.c
-int		ft_usleep(int usec, t_thg *table);
-long	get_time(void);
+int		ft_usleep(long usec, t_thg *table);
+long	get_time_in_ms(void);
 long	timestamp_calc(long current_time, long start_time);
 
 // utils.c

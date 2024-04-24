@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:33:39 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/15 17:02:27 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:04:29 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ void	t_thg_init(t_thg *game, t_thg *chair, int i, char **argv)
 	chair->eating = false;
 	chair->sleeping = false;
 	chair->thinking = false;
+	chair->fork_mutex = malloc(sizeof(t_mtx));
+	mutex_handle(chair->fork_mutex, INIT);
+	chair->dead_mutex = malloc(sizeof(t_mtx));
+	mutex_handle(chair->dead_mutex, INIT);
+	chair->time_mutex = malloc(sizeof(t_mtx));
+	mutex_handle(chair->time_mutex, INIT);
 	chair->next = NULL;
 	chair->prev = NULL;
 }
@@ -44,13 +50,10 @@ void	t_thg_first_init(t_thg *game, int i, char **argv)
 		game->max_meals = ft_atoi(argv[5]);
 	else
 		game->max_meals = -1;
-	printf("a\n");
 	game->meals_counter = malloc(sizeof(int));
 	*game->meals_counter = 0;
-	printf("b\n");
 	game->start_time = malloc(sizeof(int));
 	*game->start_time = -1;
-	printf("c\n");
 	game->dead = malloc(sizeof(bool));
 	*game->dead = false;
 	game->philosopher = i;
@@ -60,6 +63,12 @@ void	t_thg_first_init(t_thg *game, int i, char **argv)
 	game->eating = false;
 	game->sleeping = false;
 	game->thinking = false;
+	game->fork_mutex = malloc(sizeof(t_mtx));
+	mutex_handle(game->fork_mutex, INIT);
+	game->dead_mutex = malloc(sizeof(t_mtx));
+	mutex_handle(game->dead_mutex, INIT);
+	game->time_mutex = malloc(sizeof(t_mtx));
+	mutex_handle(game->time_mutex, INIT);
 	game->next = NULL;
 	game->prev = NULL;
 }
