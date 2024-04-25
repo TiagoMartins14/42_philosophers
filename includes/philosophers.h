@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/24 23:01:24 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:52:18 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 #define WHITE "\033[1;37m"
 
 typedef pthread_mutex_t	t_mtx;
+typedef struct	s_thg t_thg;
 
 typedef	enum e_op
 {
@@ -61,35 +62,53 @@ typedef enum e_philo_status
 	THINKING,
 	TAKE_RIGHT_FORK,
 	TAKE_LEFT_FORK,
-	DIED,
+	DEAD,
 }	t_philo_status;
 
+typedef struct s_forks
+{
+	t_mtx	fork;
+	int		fork_id;
+}	t_fork;
+
+typedef struct s_philo
+{
+	int			id;
+	bool		full;
+	long		meals_counter;
+	long		last_meal_time;
+	pthread_t	thread_id;
+	t_fork		*left_fork;
+	t_fork		*right_fork;
+	t_mtx		philo_mutex;
+	t_thg		*thg;
+}	t_philo;
+
+// thg stands for "The Hunger Games"
 typedef struct s_thg
 {
-	int				t_t_die;
-	int				t_t_eat;
-	int				t_t_sleep;
-	int				max_meals;
-	int				*meals_counter;
-	int				philosopher;
-	int				fork;
-	long			current_time;
-	long			last_meal;
-	long			*start_time;
-	bool			eating;
-	bool			sleeping;
-	bool			thinking;
-	bool			*dead;
-	pthread_mutex_t	*fork_mutex;
-	pthread_mutex_t	*dead_mutex;
-	pthread_mutex_t	*time_mutex;
-	struct s_thg	*next;
-	struct s_thg	*prev;
-}	t_thg;
+	int			t_t_die;
+	int			t_t_eat;
+	int			t_t_sleep;
+	int			max_meals;
+	int			philo_nbr;
+	int			numof_running_threads;
+	long		start_time;
+	bool		thg_finished;
+	bool		all_ready;
+	t_fork		*forks;
+	t_philo		*philos;
+	pthread_t	*checker;
+	t_mtx		*table_mutex;
+	t_mtx		*print_mutex;
+}	;
 
 // conditions.c
 bool	has_two_forks(t_thg *table);
 bool	is_philo_dead(t_thg *table);
+
+// malloc_utils.c
+void	*handle_malloc(size_t bytes);
 
 // mutex_utils.c
 int	mutex_handle(t_mtx *mutex, t_op operation);

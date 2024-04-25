@@ -6,7 +6,7 @@
 #    By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#              #
-#    Updated: 2024/04/24 22:21:12 by tiaferna         ###   ########.fr        #
+#    Updated: 2024/04/25 11:56:53 by tiaferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ RM				= rm -rf
 SRCS			= 	conditions.c \
 					ft_utils.c \
 					main.c \
+					malloc_utils.c \
 					mem_free.c \
 					mutex_utils.c \
 					setters_and_getters_1.c \
