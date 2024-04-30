@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:57:55 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/25 12:27:59 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/30 15:50:16 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int	main(int argc, char **argv)
 	
 	if (argc == 5 || argc == 6)
 	{
-		check_and_parse_input(thg, argv);
-		assemble_the_hunger_games(argc, argv);
-		start_the_hunger_games(argc, argv);
+		if (check_and_parse_input(&thg, argv) == -1)
+			return (-1);
+		assemble_the_hunger_games(&thg);
+		start_the_hunger_games(&thg);
+		free_the_games(&thg);
 	}
 	else
 		printf("Invalid input! Valid arguments: "

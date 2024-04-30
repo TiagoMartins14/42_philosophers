@@ -6,13 +6,13 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:27:16 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/24 14:03:33 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/29 20:45:17 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static int	handle_thread_error(int status, t_op operation)
+static long	handle_thread_error(int status, t_op operation)
 {
 	if (status == EAGAIN)
 		printf("No ressources to create abother thread.\n");
@@ -31,7 +31,8 @@ static int	handle_thread_error(int status, t_op operation)
 	return (status);
 }
 
-int	thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_op operation)
+long	thread_handle(pthread_t *thread, void *(*foo)(void *), \
+									void *data, t_op operation)
 {
 	int	status;
 
@@ -49,3 +50,29 @@ int	thread_handle(pthread_t *thread, void *(*foo)(void *), void *data, t_op oper
 	}
 	return (status);
 }
+
+bool	all_threads_started(t_mtx *mutex, long *threads, long philo_nbr)
+{
+	bool	status;
+
+	status = false;
+	mutex_handle(mutex, LOCK);
+	if (*threads == philo_nbr)
+		status = true;
+	mutex_handle(mutex, UNLOCK);
+	return (status);
+}
+
+void	wait_all_threads_ready(t_thg *thg)
+{
+	while (!get_bool(&thg->game_mutex, &thg->all_ready))
+		;
+}
+
+void	add_to_numof_running_threads(t_mtx *mutex, long *num)
+{
+	mutex_handle(mutex, LOCK);
+	(*num)++;
+	mutex_handle(mutex, UNLOCK);
+}
+

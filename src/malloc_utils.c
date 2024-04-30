@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 11:34:07 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/25 11:56:42 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/29 21:14:55 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	*handle_malloc(size_t bytes)
 	void	*ret;
 
 	ret = malloc(bytes);
-	if (NULL == ret)
+	if (ret == NULL)
 	{
-		printf("Error with the malloc.\n");
+		printf(RED"Error with the malloc.\n"RESET);
 		return (NULL);
 	}
 	return (ret);

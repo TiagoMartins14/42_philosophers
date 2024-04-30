@@ -6,32 +6,32 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:42:06 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/25 09:49:31 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:51:07 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	ft_usleep(long usec, t_thg *table)
+void	ft_usleep(long usec, t_thg *thg)
 {
 	long	start; 
 	long	elapsed;
 	long	rem;
-
-	start = get_time_in_ms();
-	while (get_time_in_ms() - start < usec)
+	(void)(thg);
+	start = get_time_in_ms() * 1e3;
+	while (get_time_in_ms() * 1e3 - start < usec)
 	{
-		if (game_over_condition_met(table))
+		if (game_over_condition_met(thg))
 			break ;
-		elapsed = get_time_in_ms() - start;
+		elapsed = get_time_in_ms() * 1e3 - start;
 		rem = usec - elapsed;
 		if (rem > 1e3)
 			usleep(rem / 2);
 		else
-			while (get_time_in_ms() - start < usec)
+			while (get_time_in_ms() * 1e3 - start < usec)
 				;
 	}
-	return (0);
+	return ;
 }
 
 long	get_time_in_ms(void)
@@ -44,9 +44,4 @@ long	get_time_in_ms(void)
 		return (-1);
 	}
 	return (time.tv_sec * 1e3 + time.tv_usec / 1e3);
-}
-
-long	timestamp_calc(long current_time, long start_time)
-{
-	return (current_time - start_time);
 }

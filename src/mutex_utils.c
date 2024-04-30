@@ -6,13 +6,13 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:36:30 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/24 14:00:35 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/29 20:41:53 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-static int handle_mtx_error(int status, t_op operation)
+static long handle_mtx_error(int status, t_op operation)
 {
 	if (status == EINVAL && (operation == LOCK || operation == UNLOCK || operation == DESTROY))
 		printf("The value specified by mutex is invalid.\n");
@@ -29,7 +29,7 @@ static int handle_mtx_error(int status, t_op operation)
 	return (status);
 }
 
-int	mutex_handle(t_mtx *mutex, t_op operation)
+long	mutex_handle(t_mtx *mutex, t_op operation)
 {
 	int	status;
 

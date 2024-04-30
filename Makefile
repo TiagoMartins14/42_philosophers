@@ -6,7 +6,7 @@
 #    By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#              #
-#    Updated: 2024/04/25 11:56:53 by tiaferna         ###   ########.fr        #
+#    Updated: 2024/04/30 20:21:04 by tiaferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,15 +41,17 @@ CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -g #-fsanitize=thread
 RM				= rm -rf
 
-SRCS			= 	conditions.c \
+SRCS			= 	actions.c \
 					ft_utils.c \
+					input_parser.c \
 					main.c \
 					malloc_utils.c \
 					mem_free.c \
 					mutex_utils.c \
-					setters_and_getters_1.c \
-					setters_and_getters_2.c \
+					setters_and_getters.c \
 					structs_init.c \
+					the_hunger_games_utils.c \
+					the_hunger_games.c \
 					threads_utils.c \
 					time.c
 

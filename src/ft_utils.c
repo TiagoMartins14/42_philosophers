@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 19:47:10 by tiago             #+#    #+#             */
-/*   Updated: 2024/04/03 09:06:18 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:03:08 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,26 +48,4 @@ char	*ft_strdup(const char *str)
 	}
 	else
 		return (NULL);
-}
-
-int	ft_atoi(const char *nstr)
-{
-	size_t	i;
-	int		sign;
-	int		nb;
-
-	nb = 0;
-	sign = 1;
-	i = 0;
-	while ((nstr[i] >= 9 && nstr[i] <= 13) || nstr[i] == 32)
-		i++;
-	if (nstr[i] == '-' || nstr[i] == '+')
-	{
-		if (nstr[i] == '-')
-			sign = sign * -1;
-		i++;
-	}
-	while (nstr[i] >= '0' && nstr[i] <= '9')
-		nb = nb * 10 + nstr[i++] - '0';
-	return (nb * sign);
 }
