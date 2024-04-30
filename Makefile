@@ -6,7 +6,7 @@
 #    By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#              #
-#    Updated: 2024/04/15 17:16:06 by tiaferna         ###   ########.fr        #
+#    Updated: 2024/04/25 11:56:53 by tiaferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,16 @@ CFLAGS			= -Wall -Wextra -Werror -g #-fsanitize=thread
 RM				= rm -rf
 
 SRCS			= 	conditions.c \
+					ft_utils.c \
 					main.c \
+					malloc_utils.c \
+					mem_free.c \
+					mutex_utils.c \
+					setters_and_getters_1.c \
+					setters_and_getters_2.c \
 					structs_init.c \
-					time.c \
-					utils.c
+					threads_utils.c \
+					time.c
 
 # Substitute .c with .o 
 OBJS			= $(SRCS:%.c=$(OBJS_DIR)/%.o)

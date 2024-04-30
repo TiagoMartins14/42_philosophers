@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   malloc_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 17:57:55 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/25 12:27:59 by tiaferna         ###   ########.fr       */
+/*   Created: 2024/04/25 11:34:07 by tiaferna          #+#    #+#             */
+/*   Updated: 2024/04/25 11:56:42 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-int	main(int argc, char **argv)
+void	*handle_malloc(size_t bytes)
 {
-	t_thg	thg;
-	
-	if (argc == 5 || argc == 6)
+	void	*ret;
+
+	ret = malloc(bytes);
+	if (NULL == ret)
 	{
-		check_and_parse_input(thg, argv);
-		assemble_the_hunger_games(argc, argv);
-		start_the_hunger_games(argc, argv);
+		printf("Error with the malloc.\n");
+		return (NULL);
 	}
-	else
-		printf("Invalid input! Valid arguments: "
-		"<NUM_OF_PHILOS> <T_T_DIE> <T_T_EAT> <T_T_SLEEP> [MAX_MEALS]\n");
-	return (0);
+	return (ret);
 }

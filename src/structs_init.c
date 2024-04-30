@@ -6,60 +6,69 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:33:39 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/15 17:02:27 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:28:50 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philosophers.h"
 
-void	t_thg_init(t_thg *game, t_thg *chair, int i, char **argv)
+void	check_and_parse_input(thg, argv)
 {
-	chair->t_t_die = ft_atoi(argv[2]);
-	chair->t_t_eat = ft_atoi(argv[3]);
-	chair->t_t_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		chair->max_meals = ft_atoi(argv[5]);
-	else
-		chair->max_meals = -1;
-	chair->meals_counter = game->meals_counter;
-	chair->start_time = game->start_time;
-	chair->dead = game->dead;
-	chair->philosopher = i;
-	chair->fork = 0;
-	chair->current_time = 0;
-	chair->last_meal = 0;
-	chair->eating = false;
-	chair->sleeping = false;
-	chair->thinking = false;
-	chair->next = NULL;
-	chair->prev = NULL;
+	
 }
 
-void	t_thg_first_init(t_thg *game, int i, char **argv)
+void	give_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 {
-	game->t_t_die = ft_atoi(argv[2]);
-	game->t_t_eat = ft_atoi(argv[3]);
-	game->t_t_sleep = ft_atoi(argv[4]);
-	if (argv[5])
-		game->max_meals = ft_atoi(argv[5]);
+	if (philo->id % 2 != 0)
+	{
+		philo->left_fork = &forks[(philo_pos + 1) % philo->thg->philo_nbr];
+		philo->right_fork = &forks[philo_pos];
+	}
 	else
-		game->max_meals = -1;
-	printf("a\n");
-	game->meals_counter = malloc(sizeof(int));
-	*game->meals_counter = 0;
-	printf("b\n");
-	game->start_time = malloc(sizeof(int));
-	*game->start_time = -1;
-	printf("c\n");
-	game->dead = malloc(sizeof(bool));
-	*game->dead = false;
-	game->philosopher = i;
-	game->fork = 0;
-	game->current_time = 0;
-	game->last_meal = 0;
-	game->eating = false;
-	game->sleeping = false;
-	game->thinking = false;
-	game->next = NULL;
-	game->prev = NULL;
+	{
+		philo->left_fork = &forks[philo_pos];
+		philo->right_fork = &forks[(philo_pos + 1) % philo->thg->philo_nbr];
+	}
+}
+
+void	t_philo_init(t_thg *game)
+{
+	int	i;
+	t_philo *philo;
+	
+	i = -1;
+	while (++i < game->philo_nbr)
+	{
+		philo = game->philos + i;
+		philo->id = i + 1;
+		philo->full = false;
+		philo->meals_counter = 0;
+		mutex_handle(&philo->philo_mutex, INIT);
+		philo->thg = game;
+		give_out_forks(philo, game->forks, i);
+	}
+}
+
+int	t_thg_init(t_thg *game, char **argv)
+{
+	int	i;
+
+	i = -1;
+	game->numof_running_threads = 0;
+	game->thg_finished = false;
+	game->all_ready = false;
+	game->philos = handle_malloc(sizeof(t_philo) * game->philo_nbr);
+	if (!game->philos)
+		return (-1);
+	game->forks = handle_malloc(sizeof(t_fork) * game->philo_nbr);
+	if (!game->forks)
+		return (-1);
+	mutex_handle(game->table_mutex, INIT);
+	mutex_handle(game->print_mutex, INIT);
+	while (++i < game->philo_nbr)
+	{
+		mutex_handle(&game->forks[i].fork, INIT);
+		game->forks[i].fork_id = i;
+	}
+	t_philo_init(game);
 }
