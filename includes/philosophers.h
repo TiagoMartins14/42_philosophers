@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/29 20:55:25 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:40:27 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # endif
 
 typedef pthread_mutex_t	t_mtx;
-typedef struct	s_thg t_thg;
+typedef struct s_thg	t_thg;
 
 typedef enum e_char_type
 {
@@ -54,7 +54,7 @@ typedef enum e_char_type
 	DIGIT,
 }	t_char_type;
 
-typedef	enum e_op
+typedef enum e_op
 {
 	INIT,
 	CREATE,
@@ -112,7 +112,6 @@ struct s_thg
 	t_mtx		game_mutex;
 	t_mtx		print_mutex;
 }	;
-
 
 // actions.c
 void	print_action(t_philo_status status, t_philo *philo);

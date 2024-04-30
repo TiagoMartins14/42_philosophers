@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:42:06 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 19:51:07 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/04/30 20:35:40 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	ft_usleep(long usec, t_thg *thg)
 {
-	long	start; 
+	long	start;
 	long	elapsed;
 	long	rem;
-	(void)(thg);
+
 	start = get_time_in_ms() * 1e3;
 	while (get_time_in_ms() * 1e3 - start < usec)
 	{
