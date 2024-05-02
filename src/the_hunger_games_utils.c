@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:28:57 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 16:01:12 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 08:09:22 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ void	give_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 void	odds_go_first(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-		ft_usleep(60, philo->thg);
+		usleep(60);
 }
