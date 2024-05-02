@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 23:27:28 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:20:19 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,10 @@ struct s_thg
 /// @param philo
 void	print_action(t_philo_status status, t_philo *philo);
 
-/// @brief Prints the philo's eating status and advances
-/// @brief its corresponding time_to_eat
-/// @param philo 
-void	philo_eat(t_philo *philo);
+void	print_fork_action(t_philo_status status, t_philo *philo);
+void	print_sleeping(t_philo *philo);
+void	print_thinking(t_philo *philo);
+void	print_dead(t_philo *philo);
 
 /*
  * ft_utils.c
@@ -233,6 +233,16 @@ void	give_out_forks(t_philo *philo, t_fork *forks, int philo_pos);
 /// @brief Allows the odd numbered philos to have a headstart of 60 microseconds
 /// @param philo 
 void	odds_go_first(t_philo *philo);
+
+/// @brief Special case for a single philo
+/// @param args 
+/// @return void *
+void	*process_single_philo(void *args);
+
+/// @brief Prints the philo's eating status and advances
+/// @brief its corresponding time_to_eat
+/// @param philo 
+void	philo_eat(t_philo *philo);
 
 /*
  * the_hunger_games.c

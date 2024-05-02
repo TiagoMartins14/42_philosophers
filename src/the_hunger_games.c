@@ -18,18 +18,18 @@ void	*fight(void *args)
 
 	philo = (t_philo *)args;
 	wait_all_threads_ready(philo->thg);
+	odds_go_first(philo);
 	set_long(&philo->philo_mutex, &philo->last_meal_time, get_time_in_ms());
 	add_to_numof_running_threads(&philo->thg->game_mutex, \
 	&philo->thg->numof_running_threads);
-	odds_go_first(philo);
 	while (!game_over_condition_met(philo->thg))
 	{
 		if (get_bool(&philo->philo_mutex, &philo->full))
 			break ;
 		philo_eat(philo);
-		print_action(SLEEPING, philo);
+		print_sleeping(philo);
 		ft_usleep(philo->thg->t_t_sleep, philo->thg);
-		print_action(THINKING, philo);
+		print_thinking(philo);
 	}
 	return (NULL);
 }
@@ -66,7 +66,7 @@ void	*big_brother(void *args)
 			if (philo_died(thg->philos + i))
 			{
 				set_bool(&thg->game_mutex, &thg->thg_finished, true);
-				print_action(DEAD, thg->philos + i);
+				print_dead(thg->philos + i);
 			}
 		}
 	}
@@ -81,11 +81,8 @@ long	start_the_hunger_games(t_thg *thg)
 	if (thg->max_meals == 0)
 		return (0);
 	else if (thg->philo_nbr == 1)
-	{
-		ft_usleep(thg->t_t_die / 1e3, thg);
-		printf("%ld 1 died\n", (long)(thg->t_t_die / 1e3));
-		return (-1);
-	}
+		thread_handle(&thg->philos[0].thread_id, process_single_philo,
+			&thg->philos[0], CREATE);
 	else
 		while (++i < thg->philo_nbr)
 			thread_handle(&thg->philos[i].thread_id, fight,

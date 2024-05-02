@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:42:06 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 20:35:40 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:21:01 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,13 @@
 void	ft_usleep(long usec, t_thg *thg)
 {
 	long	start;
-	long	elapsed;
-	long	rem;
 
 	start = get_time_in_ms() * 1e3;
 	while (get_time_in_ms() * 1e3 - start < usec)
 	{
 		if (game_over_condition_met(thg))
 			break ;
-		elapsed = get_time_in_ms() * 1e3 - start;
-		rem = usec - elapsed;
-		if (rem > 1e3)
-			usleep(rem / 2);
-		else
-			while (get_time_in_ms() * 1e3 - start < usec)
-				;
+		usleep(100);
 	}
 	return ;
 }
@@ -38,10 +30,6 @@ long	get_time_in_ms(void)
 {
 	struct timeval		time;
 
-	if (gettimeofday(&time, NULL) == -1)
-	{
-		write(2, "gettimeofday error\n", 20);
-		return (-1);
-	}
+	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1e3 + time.tv_usec / 1e3);
 }
