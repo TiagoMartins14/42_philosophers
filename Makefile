@@ -6,7 +6,7 @@
 #    By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#              #
-#    Updated: 2024/05/02 11:19:23 by tiaferna         ###   ########.fr        #
+#    Updated: 2024/05/02 12:37:14 by tiaferna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,9 @@ PURPLE  = \033[1;35m
 CYAN    = \033[1;36m
 WHITE   = \033[1;37m
 
-SRCS_DIR		= src
-
 OBJS_DIR		= objs
 
-INCLUDES		= includes
+INCLUDES		= philosophers.h
 
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -g #-fsanitize=thread
@@ -62,17 +60,17 @@ OBJS			= $(SRCS:%.c=$(OBJS_DIR)/%.o)
 all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
-	@echo "$(GREEN)./philosophers executable is ready!$(RESET)"
+	@echo "$(GREEN)./philo executable is ready!$(RESET)"
 
 #create .o fies
 # $< first prerequisite aka .c; $@ output/target file aka .o
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+$(OBJS_DIR)/%.o: %.c
 	mkdir -p $(@D)
-	$(CC) -I $(INCLUDES) $(CFLAGS) -c $< -o $@
+	$(CC) -I $(CFLAGS) -c $< -o $@
 
 #testing fd leaks
 leaks:
-	valgrind --leak-check=full --show-leak-kinds=all ./philosophers
+	valgrind --leak-check=full --show-leak-kinds=all ./philo
 
 #remove .o files
 clean:

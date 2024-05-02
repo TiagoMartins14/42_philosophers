@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 19:47:10 by tiago             #+#    #+#             */
-/*   Updated: 2024/04/26 16:03:08 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:31:58 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 size_t	ft_strlen(const char *s)
 {

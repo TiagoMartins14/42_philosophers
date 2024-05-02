@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 09:06:35 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 15:47:24 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:07 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 void	free_the_games(t_thg *thg)
 {

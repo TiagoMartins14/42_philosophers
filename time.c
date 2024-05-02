@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:42:06 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/02 11:21:01 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:37 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 void	ft_usleep(long usec, t_thg *thg)
 {

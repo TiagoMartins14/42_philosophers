@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:28:57 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/02 12:18:12 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:26 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 void	give_out_forks(t_philo *philo, t_fork *forks, int philo_pos)
 {

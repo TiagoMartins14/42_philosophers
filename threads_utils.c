@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:27:16 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 20:33:34 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:33 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 static long	handle_thread_error(int status, t_op operation)
 {

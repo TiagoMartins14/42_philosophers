@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 11:34:07 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/29 21:14:55 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:03 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 void	*handle_malloc(size_t bytes)
 {

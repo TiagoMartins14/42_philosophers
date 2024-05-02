@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/02 12:20:19 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:41:25 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,25 @@ struct s_thg
 /*
  * actions.c
 */
-/// @brief Prints the philosopher's action on the terminal
+/// @brief Prints the philosopher's fork taking action on the terminal
 /// @param status 
 /// @param philo
-void	print_action(t_philo_status status, t_philo *philo);
-
 void	print_fork_action(t_philo_status status, t_philo *philo);
+
+/// @brief Prints the philosopher's eating action on the terminal
+/// @param philo 
+void	print_eating(t_philo *philo);
+
+/// @brief Prints the philosopher's sleeping action on the terminal
+/// @param philo 
 void	print_sleeping(t_philo *philo);
+
+/// @brief Prints the philosopher's thinking action on the terminal
+/// @param philo 
 void	print_thinking(t_philo *philo);
+
+/// @brief Prints the philosopher's dead action on the terminal
+/// @param philo 
 void	print_dead(t_philo *philo);
 
 /*

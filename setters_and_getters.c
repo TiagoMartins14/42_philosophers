@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:22:12 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/29 20:49:22 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:15 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 void	set_long(t_mtx *mutex, long *dest, long value)
 {

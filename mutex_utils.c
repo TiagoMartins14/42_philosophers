@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:36:30 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 20:34:30 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:10 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 static long	handle_mtx_error(int status, t_op operation)
 {

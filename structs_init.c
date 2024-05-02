@@ -6,11 +6,11 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:33:39 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/04/30 20:36:53 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/02 12:32:22 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philosophers.h"
+#include "philosophers.h"
 
 void	t_philo_init(t_thg *thg)
 {
