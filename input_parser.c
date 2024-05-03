@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:43:11 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/02 12:31:57 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/03 23:19:57 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ long	check_and_parse_input(t_thg *thg, char **argv)
 	}
 	if (argv[5])
 		thg->max_meals = ft_atol(argv[5]);
-	else
+	if (thg->max_meals == -1)
+		return (-1);
+	if (!argv[5])
 		thg->max_meals = -1;
 	return (0);
 }
