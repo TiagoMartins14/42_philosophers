@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:43:11 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/03 23:19:57 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/04 10:58:09 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,9 @@ static long	ft_atol(const char *nstr)
 long	check_and_parse_input(t_thg *thg, char **argv)
 {
 	thg->philo_nbr = ft_atol(argv[1]);
-	if (thg->philo_nbr > PHILO_MAX)
+	if (thg->philo_nbr < 1)
 	{
-		printf(RED"The maximum number of philosophers "
-			"allowed is %d\n", PHILO_MAX);
+		printf(RED"Invalid number of philosophers\n");
 		return (-1);
 	}
 	thg->t_t_die = ft_atol(argv[2]) * 1e3;
