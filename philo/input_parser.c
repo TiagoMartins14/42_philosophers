@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:43:11 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/07 12:10:04 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:34:01 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ static long	ft_atol(const char *nstr)
 		return (-1);
 	while (is_type(*nstr, DIGIT))
 		nb = (nb * 10) + (*nstr++ - '0');
+	if (*nstr && !is_type(*nstr, DIGIT))
+	{
+		printf(RED"The input is not a digit\n"RESET);
+		return (-1);
+	}
 	if (nb > __INT_MAX__)
 	{
 		printf(RED"The number cannot be bigger than"
@@ -99,13 +104,6 @@ long	check_and_parse_input(t_thg *thg, char **argv)
 	thg->t_t_die = ft_atol(argv[2]) * 1e3;
 	thg->t_t_eat = ft_atol(argv[3]) * 1e3;
 	thg->t_t_sleep = ft_atol(argv[4]) * 1e3;
-	if (thg->t_t_die < 6e4
-		|| thg->t_t_sleep < 6e4
-		|| thg->t_t_eat < 6e4)
-	{
-		printf(RED"Timestamps need to be bigger than 60ms\n"RESET);
-		return (-1);
-	}
 	if (argv[5])
 		thg->max_meals = ft_atol(argv[5]);
 	if (thg->max_meals == -1)
