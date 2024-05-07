@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 14:37:44 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/07 12:19:47 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:25:29 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	print_fork_action(t_philo_status status, t_philo *philo)
 		return ;
 	mutex_handle(&philo->thg->print_mutex, LOCK);
 	elapsed = get_time_in_ms() - philo->thg->start_time;
- 	if (elapsed > __LONG_MAX__)
-		elapsed = 0;
 	if ((status == TAKE_RIGHT_FORK || status == TAKE_LEFT_FORK) && \
 	!game_over_condition_met(philo->thg))
 		printf("%ld %d has taken a fork\n", elapsed, philo->id);
