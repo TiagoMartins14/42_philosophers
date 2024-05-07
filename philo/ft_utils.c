@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 19:47:10 by tiago             #+#    #+#             */
-/*   Updated: 2024/05/02 12:31:58 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:00:50 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ char	*ft_strdup(const char *str)
 	}
 	else
 		return (NULL);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while ((s1[i] == s2[i]) && s1[i] != '\0')
+		i++;
+	return ((unsigned char) s1[i] - (unsigned char) s2[i]);
 }

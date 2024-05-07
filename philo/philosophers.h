@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:24:33 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/02 12:41:25 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:02:03 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,12 @@ size_t	ft_strlen(const char *s);
 /// @param str 
 /// @return char *
 char	*ft_strdup(const char *str);
+
+/// @brief Compares strings 's1' and 's2' character by character.
+/// @param s1 
+/// @param s2 
+/// @return If the strings are equal, the function returns 0.
+int	ft_strcmp(char *s1, char *s2);
 
 /*
  * input_parser.c

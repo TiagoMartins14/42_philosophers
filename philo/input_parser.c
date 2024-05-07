@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:43:11 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/04 10:58:09 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/07 12:10:04 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ static long	check_input(const char *str)
 		++str;
 	else if (*str == '-' || !is_type(*str, DIGIT))
 	{
-		if (*str == '-')
-			printf(RED"Please insert only positive numbers.\n"RESET);
-		else
-			printf(RED"The input is not a digit"RESET);
+		if (*str == '-' && ft_strcmp((char *)str, "-0") != 0)
+			printf(RED"Please insert only positive numbers\n"RESET);
+		else if (*str != '-' && !is_type(*str, DIGIT))
+			printf(RED"The input is not a digit\n"RESET);
 		return (-1);
 	}
 	while (is_type(*str++, DIGIT))
@@ -45,7 +45,7 @@ static long	check_input(const char *str)
 	if (len > 10)
 	{
 		printf(RED"The number cannot be bigger "
-			"than 2147483647 (INT_MAX).\n"RESET);
+			"than 2147483647 (INT_MAX)\n"RESET);
 		return (-1);
 	}
 	return (0);
