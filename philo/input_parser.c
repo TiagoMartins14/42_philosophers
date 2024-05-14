@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:43:11 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/14 11:41:55 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:06:10 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ long	check_and_parse_input(t_thg *thg, char **argv)
 	thg->philo_nbr = ft_atol(argv[1]);
 	if (thg->philo_nbr < 1)
 	{
-		printf(RED"Invalid number of philosophers\n");
+		printf(RED"Invalid number of philosophers\n"RESET);
 		return (-1);
 	}
 	if (thg->philo_nbr > 200)
 	{
-		printf(RED"The maximum number of philosophers allowed is 200\n");
+		printf(RED"The maximum number of philosophers allowed is 200\n"RESET);
 		return (-1);
 	}
 	thg->t_t_die = ft_atol(argv[2]) * 1e3;
@@ -112,9 +112,11 @@ long	check_and_parse_input(t_thg *thg, char **argv)
 	if (thg->t_t_die < 0 || thg->t_t_eat < 0 || thg->t_t_sleep < 0)
 		return (-1);
 	if (argv[5])
+	{
 		thg->max_meals = ft_atol(argv[5]);
-	if (thg->max_meals == -1)
-		return (-1);
+		if (thg->max_meals == -1)
+			return (-1);
+	}
 	if (!argv[5])
 		thg->max_meals = -1;
 	return (0);

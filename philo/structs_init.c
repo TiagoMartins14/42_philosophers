@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 18:33:39 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/02 12:32:22 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:09:30 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	t_philo_init(t_thg *thg)
 		philo->id = i + 1;
 		philo->full = false;
 		philo->meals_counter = 0;
+		philo->last_meal_time = 0;
 		mutex_handle(&philo->philo_mutex, INIT);
 		philo->thg = thg;
 		give_out_forks(philo, thg->forks, i);

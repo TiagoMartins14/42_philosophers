@@ -38,12 +38,14 @@ static bool	philo_died(t_philo *philo)
 {
 	long	elapsed;
 	long	t_t_die;
+	long	last_meal_time;
 
+	last_meal_time = get_long(&philo->philo_mutex, &philo->last_meal_time);
+	elapsed = 0;
+	t_t_die = philo->thg->t_t_die / 1e3;
 	if (get_bool(&philo->philo_mutex, &philo->full))
 		return (false);
-	elapsed = get_time_in_ms() - \
-	get_long(&philo->philo_mutex, &philo->last_meal_time);
-	t_t_die = philo->thg->t_t_die / 1e3;
+	elapsed = get_time_in_ms() - last_meal_time;	
 	if (elapsed > t_t_die)
 		return (true);
 	return (false);
