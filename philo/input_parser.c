@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:43:11 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/07 15:24:33 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:31:25 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static long	ft_atol(const char *nstr)
 			" 2147483647 (INT_MAX).\n"RESET);
 		return (-1);
 	}
-	return (nb * 1e3);
+	return (nb);
 }
 
 long	check_and_parse_input(t_thg *thg, char **argv)
@@ -101,10 +101,10 @@ long	check_and_parse_input(t_thg *thg, char **argv)
 		printf(RED"Invalid number of philosophers\n");
 		return (-1);
 	}
-	thg->t_t_die = ft_atol(argv[2]);
-	thg->t_t_eat = ft_atol(argv[3]);
-	thg->t_t_sleep = ft_atol(argv[4]);
-	if (thg->t_t_die == -1 || thg->t_t_eat == -1 || thg->t_t_sleep == -1)
+	thg->t_t_die = ft_atol(argv[2]) * 1e3;
+	thg->t_t_eat = ft_atol(argv[3]) * 1e3;
+	thg->t_t_sleep = ft_atol(argv[4]) * 1e3;
+	if (thg->t_t_die < 0 || thg->t_t_eat < 0 || thg->t_t_sleep < 0)
 		return (-1);
 	if (argv[5])
 		thg->max_meals = ft_atol(argv[5]);
