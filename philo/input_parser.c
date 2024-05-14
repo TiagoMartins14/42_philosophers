@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 10:43:11 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/07 16:31:25 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:41:55 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,11 @@ long	check_and_parse_input(t_thg *thg, char **argv)
 	if (thg->philo_nbr < 1)
 	{
 		printf(RED"Invalid number of philosophers\n");
+		return (-1);
+	}
+	if (thg->philo_nbr > 200)
+	{
+		printf(RED"The maximum number of philosophers allowed is 200\n");
 		return (-1);
 	}
 	thg->t_t_die = ft_atol(argv[2]) * 1e3;
