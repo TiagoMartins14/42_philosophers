@@ -36,7 +36,7 @@ OBJS_DIR		= objs
 INCLUDES		= philosophers.h
 
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g #-fsanitize=thread
+CFLAGS			= -Wall -Wextra -Werror -fsanitize=thread
 RM				= rm -rf
 
 SRCS			= 	actions.c \
@@ -59,7 +59,7 @@ OBJS			= $(SRCS:%.c=$(OBJS_DIR)/%.o)
 #default target
 all: $(NAME)
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)./philo executable is ready!$(RESET)"
 
 #create .o fies

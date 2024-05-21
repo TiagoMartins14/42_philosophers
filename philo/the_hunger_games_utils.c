@@ -6,7 +6,7 @@
 /*   By: tiaferna <tiaferna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 18:28:57 by tiaferna          #+#    #+#             */
-/*   Updated: 2024/05/07 12:24:24 by tiaferna         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:29:50 by tiaferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	*process_single_philo(void *args)
 	t_philo	*philo;
 
 	philo = (t_philo *)args;
+	wait_all_threads_ready(philo->thg);
 	philo->thg->start_time = get_time_in_ms();
 	add_to_numof_running_threads(&philo->thg->game_mutex, \
 		&philo->thg->numof_running_threads);
