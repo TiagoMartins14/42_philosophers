@@ -1,7 +1,7 @@
-# 42_push_swap
+# 42_philosophers
 Project developed during the Common Core @ 42 Porto
 
-## Push_swap
+## Philosophers
 I never thought philosophy would be so deadly
 
 ### Summary:
